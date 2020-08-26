@@ -12,7 +12,7 @@ npm i http-mpcloud
 ```javascript
 const HttpMpcloud = require('http-mpcloud')
 async function main() {
-    var env = '环境id',
+    let env = '环境id',
         appid = 'appid',
         appsecret = 'appsecret'
     let cloud = new HttpMpcloud({

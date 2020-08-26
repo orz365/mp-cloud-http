@@ -1,6 +1,6 @@
 # 微信小程序云服务HTTP工具
 
-微信小程序云开发提供了 HTTP API 访问云开发资源
+微信小程序云开发提供了 HTTP API 访问云开发资源，http-mpcloud对http请求的api进行简单的封装，方便调用。
 
 ### 安装
 使用npm

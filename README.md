@@ -5,7 +5,7 @@
 ### 安装
 使用npm
 
-```bash
+```sh
 npm i http-mpcloud
 ```
 

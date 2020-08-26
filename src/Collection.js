@@ -3,11 +3,12 @@ const axios = require('axios')
 const {getToken} = require('./utils/token')
 
 class Collection {
-    constructor(env, appid, appsecret, tableName) {
+    constructor({env, appid, appsecret, access_token, tableName}) {
         this.env = env
         this.tableName = tableName
         this.appid = appid
         this.appsecret = appsecret
+        this.access_token = access_token
     }
 
     async get(options = {}) {
@@ -41,7 +42,7 @@ class Collection {
             "query": query
         }
 
-        let access_token = await getToken(this.appid, this.appsecret)
+        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         let res = await axios.post(`https://api.weixin.qq.com/tcb/databasequery?access_token=${access_token}`, param)
         let data = res.data;

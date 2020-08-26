@@ -19,6 +19,6 @@
   "dependencies": {
     "axios": "^0.20.0",
     "log4js": "^6.3.0",
-    "memory-cache": "^0.2.0"
+    "node-localstorage": "^2.1.6"
   }
 }

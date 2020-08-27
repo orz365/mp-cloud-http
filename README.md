@@ -6,17 +6,19 @@
 使用npm
 
 ```sh
-npm i http-mpcloud
+npm install http-mpcloud
 ```
 
 ```javascript
 const HttpMpCloud = require('http-mpcloud')
 
+// 参数
 let env = '环境id',
     appid = 'appid',
     appsecret = 'appsecret',
     access_token = 'access_token'  // 优先使用access_token
 
+// 生成Http云开发对象
 let hcloud = new HttpMpCloud({
     env: env,
     appid,
@@ -24,6 +26,7 @@ let hcloud = new HttpMpCloud({
     access_token  // 可选
 })
 
+// 获取集合数据库表tb_test
 let collection = hcloud.collection('tb_test')
 
 // 查询记录

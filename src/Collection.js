@@ -23,6 +23,10 @@ class Collection {
         this.appsecret = appsecret
         this.access_token = access_token
 
+        this.initQeury()
+    }
+
+    initQeury(){
         this.query = `db.collection("${this.tableName}")`
     }
 
@@ -65,7 +69,7 @@ class Collection {
     }
 
     orderBy(field, orderType) {
-        this.query += `.orderBy(${field},${orderType})`
+        this.query += `.orderBy("${field}","${orderType}")`
         return this
     }
 
@@ -83,12 +87,24 @@ class Collection {
             "env": this.env,
             "query": this.query
         }
-
+        this.initQeury()
         let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databasequery?access_token=${access_token}`, param).then(res => {
-                resolve(res.data)
+                let data = res.data
+                if (data.errcode !== 0) {
+                    reject(res)
+                } else {
+                    try {
+                        for (var i = 0; i < data.data.length; i++) {
+                            data.data[i] = JSON.parse(data.data[i])
+                        }
+                        resolve(data)
+                    } catch (e) {
+                        logger.error(e)
+                    }
+                }
             }).catch(err => {
                 reject(err)
             })
@@ -106,7 +122,7 @@ class Collection {
             "env": this.env,
             "query": this.query
         }
-
+        this.initQeury()
         let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
@@ -136,7 +152,7 @@ class Collection {
             "env": this.env,
             "query": this.query
         }
-
+        this.initQeury()
         let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
@@ -161,6 +177,7 @@ class Collection {
             "env": this.env,
             "query": this.query
         }
+        this.initQeury()
         let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
@@ -190,7 +207,7 @@ class Collection {
             "env": this.env,
             "query": this.query
         }
-
+        this.initQeury()
         let access_token = await getToken(this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {

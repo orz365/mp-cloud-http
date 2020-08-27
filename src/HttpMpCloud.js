@@ -64,7 +64,16 @@ class HttpMpCloud {
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`, data).then(res => {
-                resolve(res.data)
+                let data = res.data
+                if (data.errcode !== 0) {
+                    reject(res)
+                } else {
+                    try {
+                        resolve(JSON.parse(data.resp_data))
+                    } catch (e) {
+                        logger.error(e)
+                    }
+                }
             }).catch(err => {
                 reject(err)
             })

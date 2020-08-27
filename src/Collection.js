@@ -26,7 +26,7 @@ class Collection {
         this.initQeury()
     }
 
-    initQeury(){
+    initQeury() {
         this.query = `db.collection("${this.tableName}")`
     }
 
@@ -88,7 +88,8 @@ class Collection {
             "query": this.query
         }
         this.initQeury()
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databasequery?access_token=${access_token}`, param).then(res => {
@@ -123,7 +124,7 @@ class Collection {
             "query": this.query
         }
         this.initQeury()
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databasecount?access_token=${access_token}`, param).then(res => {
@@ -153,7 +154,7 @@ class Collection {
             "query": this.query
         }
         this.initQeury()
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`, param).then(res => {
@@ -178,7 +179,7 @@ class Collection {
             "query": this.query
         }
         this.initQeury()
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databasedelete?access_token=${access_token}`, param, {}).then(res => {
@@ -208,7 +209,7 @@ class Collection {
             "query": this.query
         }
         this.initQeury()
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/databaseupdate?access_token=${access_token}`, param).then(res => {

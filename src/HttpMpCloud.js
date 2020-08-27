@@ -60,7 +60,7 @@ class HttpMpCloud {
      */
     async callFunction({name, data}) {
 
-        let access_token = await getToken(this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`, data).then(res => {

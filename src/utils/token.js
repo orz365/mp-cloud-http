@@ -2,11 +2,20 @@ var JsonStorage = require('node-localstorage').JSONStorage,
     axios = require('axios'),
     logger = require('./logger')
 var storage = new JsonStorage(`${process.cwd()}/storage`)
-const storage_key = 'access_token'
-var getToken = async function (appid, appsecret, access_token_input) {
+/**
+ * 获取对应环境id的token
+ * @param env 环境id
+ * @param appid  小程序appid
+ * @param appsecret  小程序appsecret
+ * @param access_token_input 传入的access_token，如果存在，则
+ * @return {Promise.<*>}
+ */
+var getToken = async function (env, appid, appsecret, access_token_input) {
     if (access_token_input) {
         return access_token_input
     }
+
+    let storage_key = env
 
     let token = storage.getItem(storage_key)
     if (token && token.access_token && token.expire_time) {

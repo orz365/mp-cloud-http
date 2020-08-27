@@ -6,12 +6,12 @@
 使用npm
 
 ```sh
-npm install http-mpcloud
+npm install mp-cloud-http
 ```
 
 ### 例子
 ```javascript
-const HttpMpCloud = require('http-mpcloud')
+const HttpMpCloud = require('mp-cloud-http')
 const cloud = require('wx-server-sdk')   // 微信开发的sdk，用于条件参数的生成
 
 // 参数

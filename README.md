@@ -16,12 +16,14 @@ let env = '环境id',
     appid = 'appid',
     appsecret = 'appsecret',
     access_token = 'access_token'  // 优先使用access_token
+
 let hcloud = new HttpMpCloud({
     env: env,
     appid,
     appsecret,
     access_token  // 可选
 })
+
 let collection = hcloud.collection('tb_test')
 
 // 查询记录

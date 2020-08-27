@@ -67,7 +67,7 @@ collection.where({
 // { errcode: 0, errmsg: 'ok', deleted: 1 }
 ```
 
-### 更新记录
+#### 更新记录
 ```javascript
 collection.where({
     _id: '7498b5fe5f471c3f006eb57853b7dc92'
@@ -79,7 +79,7 @@ collection.where({
 // { errcode: 0, errmsg: 'ok', matched: 1, modified: 1, id: '' }
 ```
 
-### 查询记录
+#### 查询记录
 ```javascript
 collection.where({
     date: db.command.lt(new Date())  // db.command的使用，初始化云开发自己的环境，参照上面的例子

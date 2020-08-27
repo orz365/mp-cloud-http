@@ -1,6 +1,6 @@
 # 微信小程序云服务HTTP工具
 
-微信小程序云开发提供了 HTTP API 访问云开发资源，http-mpcloud对http请求的api进行简单的封装，方便调用。
+微信小程序云开发提供了 HTTP API 访问云开发资源，mp-cloud-http对http请求的api进行简单的封装，方便调用。
 
 ### 安装
 使用npm
@@ -53,7 +53,7 @@ collection.where({
 ```javascript
 collection.add({
     data: {
-        name: 'http-mpcloud',
+        name: 'mp-cloud-http',
         date: new Date()
     }
 }).then(console.log)
@@ -84,6 +84,6 @@ collection.where({
 collection.where({
     date: db.command.lt(new Date())  // db.command的使用，初始化云开发自己的环境，参照上面的例子
 }).get().then(console.log)
-// { errcode: 0, errmsg: 'ok', pager: { Offset: 0, Limit: 10, Total: 2 }, data: [ '{"_id":"aa133ce55f471c0e0054fe571042cb75","date":"2020-08-27T02:35:58.268Z","name":"http-mpcloud"}']}
+// { errcode: 0, errmsg: 'ok', pager: { Offset: 0, Limit: 10, Total: 2 }, data: [ '{"_id":"aa133ce55f471c0e0054fe571042cb75","date":"2020-08-27T02:35:58.268Z","name":"mp-cloud-http"}']}
 ```
 

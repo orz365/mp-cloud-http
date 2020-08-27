@@ -10,27 +10,25 @@ npm i http-mpcloud
 ```
 
 ```javascript
-const HttpMpcloud = require('http-mpcloud')
-async function main() {
-    let env = '环境id',
-        appid = 'appid',
-        appsecret = 'appsecret'
-    let cloud = new HttpMpcloud({
-        env: env,
-        appid,
-        appsecret
-    })
-    let collection = cloud.collection('tb_post')
+const HttpMpCloud = require('http-mpcloud')
 
-    let result = await collection.get({
-        where: {
-            title: '为什么全球“通缉”一只小蛾'
-        }
-    })
-    result = await collection.get({
-        limit: 1
-    })
-    console.log(result)
-}
-main()
+let env = '环境id',
+    appid = 'appid',
+    appsecret = 'appsecret',
+    access_token = 'access_token'  // 优先使用access_token
+let hcloud = new HttpMpCloud({
+    env: env,
+    appid,
+    appsecret,
+    access_token  // 可选
+})
+let collection = hcloud.collection('tb_test')
+
+// 查询记录
+collection.where({
+    "_id": "6518b7395f470de7006a0e971ed13105"
+}).get().then(res => {
+    console.log(res.data)
+})
+
 ```

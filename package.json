@@ -1,6 +1,6 @@
 {
-  "name": "http-mpcloud",
-  "version": "1.0.0",
+  "name": "mp-cloud-http",
+  "version": "1.0.1",
   "description": "小程序云服务HTTP工具",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/orz365/http-mpcloud.git"
+    "url": "git+https://github.com/orz365/mp-cloud-http.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/orz365/http-mpcloud/issues"
+    "url": "https://github.com/orz365/mp-cloud-http/issues"
   },
-  "homepage": "https://github.com/orz365/http-mpcloud#readme",
+  "homepage": "https://github.com/orz365/mp-cloud-http#readme",
   "dependencies": {
     "axios": "^0.20.0",
     "log4js": "^6.3.0",

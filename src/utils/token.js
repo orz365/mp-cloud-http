@@ -16,11 +16,13 @@ var getToken = async function (appid, appsecret, access_token_input) {
             logger.debug('[使用缓存token]')
             return token.access_token
         }
+    } else {
+        logger.debug('[缓存未匹配，重新获取token]')
     }
 
     let res = await axios.get(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${appsecret}`, {})
     if (res.data.errcode) {
-        logger.error('[token获取异常]',res.data)
+        logger.error('[token获取异常]', res.data)
         new Error(res.data)
         return null
     }

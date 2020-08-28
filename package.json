@@ -1,6 +1,6 @@
 {
   "name": "mp-cloud-http",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "小程序云服务HTTP工具，支持多小程序access_token获取",
   "main": "index.js",
   "scripts": {

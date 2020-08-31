@@ -2,11 +2,13 @@ const logger = require('./utils/logger')
 const axios = require('axios')
 const {getToken} = require('./utils/token')
 const querystring = require('querystring')
+const Aggregate = require('./Aggregate')
+const Common = require('./Common')
 
 /**
  * 微信小程序集合操作类
  */
-class Collection {
+class Collection extends Common {
 
     /**
      * 构造函数
@@ -17,17 +19,24 @@ class Collection {
      * @param tableName  表名
      */
     constructor({env, appid, appsecret, access_token, tableName}) {
+        super()
         this.env = env
         this.tableName = tableName
         this.appid = appid
         this.appsecret = appsecret
         this.access_token = access_token
-
         this.initQeury()
     }
 
-    initQeury() {
-        this.query = `db.collection("${this.tableName}")`
+    aggregate() {
+        return new Aggregate({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token,
+            tableName: this.tableName,
+            query: this.query
+        })
     }
 
     where(where) {
@@ -59,6 +68,11 @@ class Collection {
         return this
     }
 
+    orderBy(field, orderType) {
+        this.query += `.orderBy("${field}","${orderType}")`
+        return this
+    }
+
     field(option) {
         if (typeof(option) === 'object') {
             option = JSON.stringify(option)
@@ -68,10 +82,6 @@ class Collection {
         return this
     }
 
-    orderBy(field, orderType) {
-        this.query += `.orderBy("${field}","${orderType}")`
-        return this
-    }
 
     /**
      * 查询记录

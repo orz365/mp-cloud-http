@@ -45,7 +45,23 @@ var getToken = async function (env, appid, appsecret, access_token_input) {
     return access_token
 }
 
+/**
+ * 清空所有token
+ */
+var clearToken = function () {
+    JsonStorage.clear()
+}
+
+/**
+ * 根据环境id删除token
+ * @param env
+ */
+var deleteToken = function (env) {
+    JsonStorage.removeItem(env)
+}
 
 module.exports = {
-    getToken
+    getToken,
+    clearToken,
+    deleteToken
 }

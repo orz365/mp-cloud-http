@@ -1,6 +1,6 @@
 const Collection = require('./Collection')
 const logger = require('./utils/logger')
-const {getToken} = require('./utils/token')
+const {getToken, deleteToken, clearToken} = require('./utils/token')
 const axios = require('axios')
 
 /**
@@ -79,6 +79,7 @@ class HttpMpCloud {
             })
         })
     }
+
 }
 
 module.exports = HttpMpCloud

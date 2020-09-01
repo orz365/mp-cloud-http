@@ -48,6 +48,11 @@ class Aggregate extends Common {
         return this
     }
 
+    /**
+     * 分组
+     * @param object
+     * @return {Aggregate}
+     */
     group(object) {
         if (typeof(object) === 'object') {
             object = JSON.stringify(object)
@@ -68,32 +73,22 @@ class Aggregate extends Common {
     }
 
 
-    limit(num) {
-        num = parseInt(num)
-        if (isNaN(num)) {
-            throw new Error('limit方法参数无效')
-        }
-        this.query += `.limit(${num})`
-        logger.debug(this.query)
-        return this
-    }
-
-    skip(num) {
-        num = parseInt(num)
-        if (isNaN(num)) {
-            throw new Error('skip方法参数无效')
-        }
-        this.query += `.skip(${num})`
-        logger.debug(this.query)
-        return this
-    }
-
+    /**
+     * 排序
+     * @param object
+     * @return {Aggregate}
+     */
     sort(object) {
         object = JSON.stringify(object)
         this.query += `.sort(${object})`
         return this
     }
 
+    /**
+     * 根据数量排序
+     * @param object
+     * @return {Aggregate}
+     */
     sortByCount(object) {
         object = JSON.stringify(object)
         this.query += `.sortByCount(${object})`

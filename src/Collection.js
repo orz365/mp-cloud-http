@@ -48,26 +48,6 @@ class Collection extends Common {
         return this
     }
 
-    limit(num) {
-        num = parseInt(num)
-        if (isNaN(num)) {
-            throw new Error('limit方法参数无效')
-        }
-        this.query += `.limit(${num})`
-        logger.debug(this.query)
-        return this
-    }
-
-    skip(num) {
-        num = parseInt(num)
-        if (isNaN(num)) {
-            throw new Error('skip方法参数无效')
-        }
-        this.query += `.skip(${num})`
-        logger.debug(this.query)
-        return this
-    }
-
     orderBy(field, orderType) {
         this.query += `.orderBy("${field}","${orderType}")`
         return this

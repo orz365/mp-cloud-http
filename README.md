@@ -87,3 +87,56 @@ collection.where({
 // { errcode: 0, errmsg: 'ok', pager: { Offset: 0, Limit: 10, Total: 2 }, data: [ '{"_id":"aa133ce55f471c0e0054fe571042cb75","date":"2020-08-27T02:35:58.268Z","name":"mp-cloud-http"}']}
 ```
 
+#### 聚合函数的使用
+```javascript
+const HttpMpCloud = require('mp-cloud-http')
+const cloud = require('wx-server-sdk')   // 微信开发的sdk，用于条件参数的生成
+
+// 参数
+let env = '环境id',
+    appid = 'appid',
+    appsecret = 'appsecret',
+    access_token = 'access_token'  // 优先使用access_token
+
+cloud.init({
+    env: env
+})
+let db = cloud.database()
+let _ = db.command
+let $ = db.command.aggregate
+
+let hcloud = new HttpMpCloud({
+    env: env,
+    appid,
+    appsecret,
+    debug: true
+})
+
+// 联表查询 
+hcloud.collection('tb_comment').aggregate().lookup({
+    from: 'tb_post',
+    let: {
+        post_id: '$target_id'
+    },
+    pipeline: $.pipeline()
+        .match(
+            _.expr(
+                $.and([
+                    $.eq(['$_id', '$$post_id'])
+                ])
+            )
+        ).project({
+            _id: 1,
+            content: 1
+        }).done(),
+    as: 'postList'
+}).limit(1).end().then(res => {
+    console.log(res.data[0].postList)
+}).catch(console.log)
+
+// 随机从评论表中查询一条记录
+hcloud.collection('tb_comment').aggregate().sample({
+    size:1
+}).end().then(console.log)
+
+```

@@ -1,7 +1,7 @@
 {
   "name": "mp-cloud-http",
-  "version": "1.0.3",
-  "description": "小程序云服务HTTP工具，支持多小程序access_token获取",
+  "version": "1.0.4",
+  "description": "小程序云服务数据库HTTP工具，支持多小程序access_token获取，支持聚合函数的使用",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

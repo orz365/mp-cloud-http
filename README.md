@@ -99,14 +99,14 @@ let env = '环境id',
     access_token = 'access_token'  // 优先使用access_token
 
 cloud.init({
-    env: env
+    env
 })
 let db = cloud.database()
 let _ = db.command
 let $ = db.command.aggregate
 
 let hcloud = new HttpMpCloud({
-    env: env,
+    env,
     appid,
     appsecret,
     debug: true

@@ -16,6 +16,13 @@
     "url": "https://github.com/orz365/mp-cloud-http/issues"
   },
   "homepage": "https://github.com/orz365/mp-cloud-http#readme",
+  "keywords": [
+    "微信小程序",
+    "云开发",
+    "数据库",
+    "http",
+    "api"
+  ],
   "dependencies": {
     "axios": "^0.20.0",
     "log4js": "^6.3.0",

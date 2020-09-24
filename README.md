@@ -138,5 +138,35 @@ hcloud.collection('tb_comment').aggregate().lookup({
 hcloud.collection('tb_comment').aggregate().sample({
     size:1
 }).end().then(console.log)
-
 ```
+
+### 云存储的使用
+#### 获取存储下载链接
+```javascript
+let file_list = [{
+    fileid: 'fileid',
+    max_age: 3600
+}]
+hcloud.storage().getFileList(file_list).then(console.log).catch(console.error)
+```
+#### 获取文件上传链接，并上传文件
+````javascript
+let png = fs.createReadStream('demo.png')
+let path = 'demo.png'
+
+// 获取上传链接等信息
+hcloud.storage().getUploadPath(path).then(res => {
+    console.log(res)
+    let data = {
+        key: path,
+        Signature: res.authorization,
+        'x-cos-security-token': res.token,
+        'x-cos-meta-fileid': res.cos_file_id,
+        file: png
+    }
+    // 根据返回的信息上传文件到云存储
+    hcloud.storage().uploadFile(res.url, data).then(res => {
+        // 上传成功
+    }).catch(console.error)
+}).catch(console.error)
+````

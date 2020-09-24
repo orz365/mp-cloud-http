@@ -1,4 +1,6 @@
 const Collection = require('./Collection')
+const Storage = require('./Storage')
+const Collections = require('./Collections')
 const logger = require('./utils/logger')
 const {getToken, deleteToken, clearToken} = require('./utils/token')
 const axios = require('axios')
@@ -52,6 +54,34 @@ class HttpMpCloud {
     }
 
     /**
+     * 操作集合
+     * @param tableName
+     * @return {Collection}
+     */
+    collections() {
+        return new Collections({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token
+        })
+    }
+
+    /**
+     * 操作集合
+     * @param tableName
+     * @return {Collection}
+     */
+    storage() {
+        return new Storage({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token
+        })
+    }
+
+    /**
      * 触发云函数
      * HTTP API 途径触发云函数不包含用户信息
      * @param name
@@ -79,6 +109,7 @@ class HttpMpCloud {
             })
         })
     }
+
 
 }
 

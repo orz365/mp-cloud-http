@@ -108,7 +108,7 @@ class Collection extends Common {
      */
     async count() {
         this.query += `.count()`
-
+        logger.debug(this.query)
         let param = {
             "env": this.env,
             "query": this.query

@@ -22,7 +22,7 @@ var getToken = async function (env, appid, appsecret, access_token_input) {
         let expire_time = token.expire_time
         // 设置10分钟的提前量
         if (expire_time > Date.now() + 60 * 10 * 1000) {
-            logger.debug('[使用缓存token]')
+            logger.debug('[使用缓存token]',token.access_token)
             return token.access_token
         }
     } else {

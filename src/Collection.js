@@ -4,7 +4,7 @@ const {getToken} = require('./utils/token')
 const querystring = require('querystring')
 const Aggregate = require('./Aggregate')
 const Common = require('./Common')
-
+axios.defaults.timeout = 30000
 /**
  * 微信小程序集合操作类
  */
@@ -205,6 +205,7 @@ class Collection extends Common {
             axios.post(`https://api.weixin.qq.com/tcb/databaseupdate?access_token=${access_token}`, param).then(res => {
                 resolve(res.data)
             }).catch(err => {
+                logger.error(err)
                 reject(err)
             })
         })

@@ -4,6 +4,8 @@ const Collections = require('./Collections')
 const logger = require('./utils/logger')
 const {getToken, deleteToken, clearToken} = require('./utils/token')
 const axios = require('axios')
+const ImageProcessing = require('./other/Img')
+const Wxacode = require('./other/Wxacode')
 
 /**
  * 微信小程序云开发HTTP请求类
@@ -24,6 +26,13 @@ class HttpMpCloud {
         this.appsecret = appsecret
         this.access_token = access_token
         logger.level = debug ? 'debug' : 'error'
+
+        this.img = new ImageProcessing({
+            env, appid, appsecret, access_token, debug
+        })
+        this.wxacode = new Wxacode({
+            env, appid, appsecret, access_token, debug
+        })
     }
 
     /**

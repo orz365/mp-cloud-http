@@ -151,7 +151,7 @@ hcloud.storage().getFileList(file_list).then(console.log).catch(console.error)
 ```
 #### 获取文件上传链接，并上传文件
 ````javascript
-let png = fs.createReadStream('demo.png')
+let imgFile = fs.createReadStream('demo.png')
 let path = 'demo.png'
 
 // 获取上传链接等信息
@@ -162,7 +162,7 @@ hcloud.storage().getUploadPath(path).then(res => {
         Signature: res.authorization,
         'x-cos-security-token': res.token,
         'x-cos-meta-fileid': res.cos_file_id,
-        file: png
+        file: imgFile
     }
     // 根据返回的信息上传文件到云存储
     hcloud.storage().uploadFile(res.url, data).then(res => {

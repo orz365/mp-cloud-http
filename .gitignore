@@ -2,5 +2,6 @@
 node_modules
 test.js
 test2.js
+test3.js
 package-lock.json
 storage

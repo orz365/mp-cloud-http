@@ -48,7 +48,7 @@ collection.where({
 
 ```
 
-### 使用方法
+### 增删改查方法
 #### 新增记录
 ```javascript
 collection.add({
@@ -87,7 +87,7 @@ collection.where({
 // { errcode: 0, errmsg: 'ok', pager: { Offset: 0, Limit: 10, Total: 2 }, data: [ '{"_id":"aa133ce55f471c0e0054fe571042cb75","date":"2020-08-27T02:35:58.268Z","name":"mp-cloud-http"}']}
 ```
 
-#### 聚合函数的使用
+### 聚合函数的使用
 ```javascript
 const HttpMpCloud = require('mp-cloud-http')
 const cloud = require('wx-server-sdk')   // 微信开发的sdk，用于条件参数的生成
@@ -170,3 +170,12 @@ hcloud.storage().getUploadPath(path).then(res => {
     }).catch(console.error)
 }).catch(console.error)
 ````
+#### 删除存储文件
+```javascript
+let fileid_list = ['file_id1','file_id2']
+hcloud.storage().batchDeleteFile(fileid_list).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.error(err)
+})
+```

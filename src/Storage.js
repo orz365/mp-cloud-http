@@ -4,13 +4,13 @@ const axios = require('axios')
 const FormData = require('form-data')
 
 /**
- * Î¢ĞÅĞ¡³ÌĞò¼¯ºÏĞÅÏ¢¡¢µ¼Èëµ¼³öµÈ²Ù×÷
+ * å¾®ä¿¡å°ç¨‹åºé›†åˆä¿¡æ¯ã€å¯¼å…¥å¯¼å‡ºç­‰æ“ä½œ
  */
 class Storage {
 
     /**
-     * ¹¹Ôìº¯Êı
-     * @param env  »·¾³id
+     * æ„é€ å‡½æ•°
+     * @param env  ç¯å¢ƒid
      * @param appid   appid
      * @param appsecret  appsecret
      * @param access_token  access_token
@@ -24,7 +24,7 @@ class Storage {
 
 
     /**
-     * »ñÈ¡ÉÏ´«urlÁ´½Ó£¬ÓÃ»§»ñÈ¡µ½·µ»ØÊı¾İºó£¬ĞèÆ´×°Ò»¸ö HTTP POST ÇëÇó ½øĞĞÉÏ´«
+     * è·å–ä¸Šä¼ urlé“¾æ¥ï¼Œç”¨æˆ·è·å–åˆ°è¿”å›æ•°æ®åï¼Œéœ€æ‹¼è£…ä¸€ä¸ª HTTP POST è¯·æ±‚ è¿›è¡Œä¸Šä¼ 
      * @return {Promise}
      */
     async getUploadPath(path) {
@@ -50,15 +50,15 @@ class Storage {
     }
 
     /**
-     * ÉÏ´«ÎÄ¼ş
+     * ä¸Šä¼ æ–‡ä»¶
      * @param url
      * @param data
      * @return {Promise}
      */
-    async uploadFile(url, data) {
+    async uploadFile(url, param) {
         let form = new FormData()
-        Object.keys(data).forEach(key => {
-            form.append(key, data[key])
+        Object.keys(param).forEach(key => {
+            form.append(key, param[key])
         })
 
         return new Promise((resolve, reject) => {
@@ -73,7 +73,7 @@ class Storage {
     }
 
     /**
-     * ¸ù¾İfile_id»ñÈ¡ÎÄ¼şÏÂÔØÁ´½Ó
+     * æ ¹æ®file_idè·å–æ–‡ä»¶ä¸‹è½½é“¾æ¥
      * @param file_list  [{fileid:'xxxx',max_age:3600}]
      * @return {Promise}
      */
@@ -87,6 +87,32 @@ class Storage {
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=${access_token}`, data).then(res => {
+                let data = res.data
+                if (data.errcode !== 0) {
+                    reject(res)
+                } else {
+                    resolve(res.data)
+                }
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    }
+
+    /**
+     * æ ¹æ®file_idæ•°ç»„ï¼Œæ‰¹é‡åˆ é™¤å­˜å‚¨æ–‡ä»¶
+     * @param fileid_list
+     */
+    async batchDeleteFile(fileid_list) {
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+
+        let data = {
+            env: this.env,
+            fileid_list
+        }
+
+        return new Promise((resolve, reject) => {
+            axios.post(`https://api.weixin.qq.com/tcb/batchdeletefile?access_token=${access_token}`, data).then(res => {
                 let data = res.data
                 if (data.errcode !== 0) {
                     reject(res)

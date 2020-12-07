@@ -1,6 +1,6 @@
 {
   "name": "mp-cloud-http",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "小程序云服务数据库HTTP工具，支持多小程序access_token获取，支持聚合函数的使用",
   "main": "index.js",
   "scripts": {
@@ -17,12 +17,13 @@
   },
   "homepage": "https://github.com/orz365/mp-cloud-http#readme",
   "keywords": [
+    "weixin",
+    "http",
+    "api",
     "微信小程序",
     "云开发",
     "数据库",
-    "云存储",
-    "http",
-    "api"
+    "云存储"
   ],
   "dependencies": {
     "axios": "^0.20.0",

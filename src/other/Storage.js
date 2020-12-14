@@ -1,5 +1,4 @@
-const {getToken, deleteToken, clearToken} = require('./utils/token')
-const logger = require('./utils/logger')
+const {getToken} = require('../utils/token')
 const axios = require('axios')
 const FormData = require('form-data')
 
@@ -22,7 +21,6 @@ class Storage {
         this.access_token = access_token
     }
 
-
     /**
      * 获取上传url链接，用户获取到返回数据后，需拼装一个 HTTP POST 请求 进行上传
      * @return {Promise}
@@ -32,7 +30,7 @@ class Storage {
 
         let data = {
             env: this.env,
-            path
+            path,
         }
 
         return new Promise((resolve, reject) => {
@@ -82,7 +80,7 @@ class Storage {
 
         let data = {
             env: this.env,
-            file_list
+            file_list,
         }
 
         return new Promise((resolve, reject) => {

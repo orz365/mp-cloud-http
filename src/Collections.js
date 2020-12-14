@@ -3,13 +3,13 @@ const logger = require('./utils/logger')
 const axios = require('axios')
 
 /**
- * Î¢ĞÅĞ¡³ÌĞò¼¯ºÏĞÅÏ¢¡¢µ¼Èëµ¼³öµÈ²Ù×÷
+ * å¾®ä¿¡å°ç¨‹åºé›†åˆä¿¡æ¯ã€å¯¼å…¥å¯¼å‡ºç­‰æ“ä½œ
  */
 class Collections {
 
     /**
-     * ¹¹Ôìº¯Êı
-     * @param env  »·¾³id
+     * æ„é€ å‡½æ•°
+     * @param env  ç¯å¢ƒid
      * @param appid   appid
      * @param appsecret  appsecret
      * @param access_token  access_token
@@ -23,7 +23,7 @@ class Collections {
 
 
     /**
-     * »ñÈ¡¼¯ºÏĞÅÏ¢
+     * è·å–é›†åˆä¿¡æ¯
      * @return {Promise}
      */
     async get(data = {}) {
@@ -46,8 +46,8 @@ class Collections {
     }
 
     /**
-     * Êı¾İ¿âÇ¨ÒÆ×´Ì¬²éÑ¯
-     * @param job_id Ç¨ÒÆÈÎÎñID
+     * æ•°æ®åº“è¿ç§»çŠ¶æ€æŸ¥è¯¢
+     * @param job_id è¿ç§»ä»»åŠ¡ID
      * @return {Promise}
      */
     async migrateInfo(job_id) {

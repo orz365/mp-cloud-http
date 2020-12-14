@@ -170,3 +170,83 @@ hcloud.storage().getUploadPath(path).then(res => {
     }).catch(console.error)
 }).catch(console.error)
 ````
+
+### 小程序码
+#### wxacode.createQRCode 
+获取小程序二维码，适用于需要的码数量较少的业务场景。通过该接口生成的小程序码，永久有效，有数量限制。
+```javascript
+hcloud.wxacode().createQRCode({
+    path: 'page/10why/index/index',
+    width: 280,
+}).then(bufferStr => {
+    fs.writeFileSync('./qrcode2.jpg', bufferStr, 'binary')
+}).catch(err => {
+    console.log(err)
+})
+```
+
+#### wxacode.get
+获取小程序码，适用于需要的码数量较少的业务场景。通过该接口生成的小程序码，永久有效，有数量限制。
+```javascript
+hcloud.wxacode().get({
+    path: 'page/10why/index/index',
+    width: 280,
+}).then(bufferStr => {
+    fs.writeFileSync('./qrcode2.jpg', bufferStr, 'binary')
+}).catch(err => {
+    console.log(err)
+})
+```
+
+#### wxacode.getUnlimited
+获取小程序码，适用于需要的码数量极多的业务场景。通过该接口生成的小程序码，永久有效，数量暂无限制。
+```javascript
+hcloud.wxacode().getUnlimited({
+    scene: 1,
+    path: 'page/10why/index/index',
+    width: 280,
+}).then(bufferStr => {
+    fs.writeFileSync('./qrcode2.jpg', bufferStr, 'binary')
+}).catch(err => {
+    console.log(err)
+})
+```
+
+### 图像处理
+#### img.aiCrop
+本接口提供基于小程序的图片智能裁剪能力。
+```javascript
+var file = fs.createReadStream('图片.png')
+hcloud.img().aiCrop(file).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.error(err)
+})
+// {"errcode":0,"errmsg":"ok","results":[{"crop_left":0,"crop_top":0,"crop_right":852,"crop_bottom":864}],"img_size":{"w":856,"h":992}}
+```
+
+#### img.scanQRCode
+本接口提供基于小程序的条码/二维码识别的API。
+```javascript
+var file = fs.createReadStream('二维码.png')
+hcloud.img().scanQRCode(file).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.error(err)
+})
+// {"errcode":0,"errmsg":"ok","code_results":[{"type_name":"WX_CODE","data":"l0\/=oGy~LAW)$8mS,jAIP6"}],"img_size":{"w":856,"h":992}}
+```
+
+#### img.superresolution
+本接口提供基于小程序的图片高清化能力。
+```javascript
+var file = fs.createReadStream('图片.png')
+hcloud.img().superresolution(file).then(res => {
+    // 根据返回的media_id，获取图片信息
+    hcloud.customerServiceMessage().getTempMedia(res.media_id).then(data => {
+        let result = fs.writeFileSync('./lll.jpg', Buffer.from(data, 'binary'))
+    })
+}).catch(err => {
+    console.error(err)
+})
+```

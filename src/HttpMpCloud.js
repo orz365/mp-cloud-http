@@ -1,11 +1,12 @@
 const Collection = require('./Collection')
-const Storage = require('./Storage')
+const Storage = require('./other/Storage')
 const Collections = require('./Collections')
 const logger = require('./utils/logger')
 const {getToken, deleteToken, clearToken} = require('./utils/token')
 const axios = require('axios')
-const ImageProcessing = require('./other/Img')
+const Img = require('./other/Img')
 const Wxacode = require('./other/Wxacode')
+const CustomerServiceMessage = require('./other/CustomerServiceMessage')
 
 /**
  * 微信小程序云开发HTTP请求类
@@ -25,14 +26,8 @@ class HttpMpCloud {
         this.appid = appid
         this.appsecret = appsecret
         this.access_token = access_token
+        this.debug = debug
         logger.level = debug ? 'debug' : 'error'
-
-        this.img = new ImageProcessing({
-            env, appid, appsecret, access_token, debug
-        })
-        this.wxacode = new Wxacode({
-            env, appid, appsecret, access_token, debug
-        })
     }
 
     /**
@@ -58,7 +53,7 @@ class HttpMpCloud {
             appid: this.appid,
             appsecret: this.appsecret,
             access_token: this.access_token,
-            tableName: tableName
+            tableName: tableName,
         })
     }
 
@@ -72,7 +67,7 @@ class HttpMpCloud {
             env: this.env,
             appid: this.appid,
             appsecret: this.appsecret,
-            access_token: this.access_token
+            access_token: this.access_token,
         })
     }
 
@@ -86,7 +81,7 @@ class HttpMpCloud {
             env: this.env,
             appid: this.appid,
             appsecret: this.appsecret,
-            access_token: this.access_token
+            access_token: this.access_token,
         })
     }
 
@@ -102,7 +97,8 @@ class HttpMpCloud {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`, data).then(res => {
+            axios.post(`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`, data).
+            then(res => {
                 let data = res.data
                 if (data.errcode !== 0) {
                     reject(res)
@@ -113,13 +109,47 @@ class HttpMpCloud {
                         logger.error(e)
                     }
                 }
-            }).catch(err => {
+            }).
+            catch(err => {
                 reject(err)
             })
         })
     }
 
+    /**
+     * 操作集合
+     * @param tableName
+     * @return {Collection}
+     */
+    img() {
+        return new Img({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token,
+            debug: this.debug,
+        })
+    }
 
+    wxacode() {
+        return new Wxacode({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token,
+            debug: this.debug,
+        })
+    }
+
+    customerServiceMessage() {
+        return new CustomerServiceMessage({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token,
+            debug: this.debug,
+        })
+    }
 }
 
 module.exports = HttpMpCloud

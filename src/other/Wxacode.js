@@ -18,17 +18,19 @@ class Wxacode {
      * @param width 二维码的宽度，单位 px。最小 280px，最大 1280px  默认430
      * @return {Promise<unknown>}
      */
-    async createQRCode(path, width = 430) {
+    async createQRCode({
+        path, width = 430,
+    }) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
         let param = {
             path: path,
-            width: width
+            width: width,
         }
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/cgi-bin/wxaapp/createwxaqrcode?access_token=${access_token}`, param, {
-                responseType: 'arraybuffer'
+                responseType: 'arraybuffer',
             }).then(res => {
                 logger.debug(res.data)
                 resolve(res.data)
@@ -50,8 +52,8 @@ class Wxacode {
             path = '',
             width = 430,
             auto_color = false,
-            line_color = {"r": 0, "g": 0, "b": 0},
-            is_hyaline = false
+            line_color = {'r': 0, 'g': 0, 'b': 0},
+            is_hyaline = false,
         }) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
@@ -60,12 +62,12 @@ class Wxacode {
             width,
             auto_color,
             line_color,
-            is_hyaline
+            is_hyaline,
         }
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/wxa/getwxacode?access_token=${access_token}`, param, {
-                responseType: 'arraybuffer'
+                responseType: 'arraybuffer',
             }).then(res => {
                 logger.debug(res.data)
                 resolve(res.data)
@@ -75,7 +77,6 @@ class Wxacode {
             })
         })
     }
-
 
     /**
      * 获取小程序码，适用于需要的码数量极多的业务场景。通过该接口生成的小程序码，永久有效，数量暂无限制。
@@ -93,8 +94,8 @@ class Wxacode {
             page = '',
             width = 430,
             auto_color = false,
-            line_color = {"r": 0, "g": 0, "b": 0},
-            is_hyaline = false
+            line_color = {'r': 0, 'g': 0, 'b': 0},
+            is_hyaline = false,
         }) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
@@ -104,12 +105,12 @@ class Wxacode {
             width,
             auto_color,
             line_color,
-            is_hyaline
+            is_hyaline,
         }
 
         return new Promise((resolve, reject) => {
             axios.post(`https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=${access_token}`, param, {
-                responseType: 'arraybuffer'
+                responseType: 'arraybuffer',
             }).then(res => {
                 logger.debug(res.data)
                 resolve(res.data)
@@ -119,7 +120,6 @@ class Wxacode {
             })
         })
     }
-
 }
 
 module.exports = Wxacode

@@ -5,10 +5,6 @@ logger.level = 'debug'
 
 log4js.configure({
     appenders: {
-        cheese: {
-            type: 'dateFile',
-            filename: 'cheese.log'
-        },
         out: {
             type: 'stdout'
         }

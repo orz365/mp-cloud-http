@@ -30,6 +30,6 @@
     "form-data": "^3.0.0",
     "log4js": "^6.3.0",
     "node-localstorage": "^2.1.6",
-    "wx-server-sdk": "^2.2.0"
+    "wx-server-sdk": "^2.4.0"
   }
 }

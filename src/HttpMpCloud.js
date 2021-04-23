@@ -31,6 +31,13 @@ class HttpMpCloud {
     }
 
     /**
+     * 获取当前
+     */
+    currentToken() {
+        return getToken(this.env, this.appid, this.appsecret)
+    }
+
+    /**
      * 数据库选择
      * @param env
      * @return {HttpMpCloud}

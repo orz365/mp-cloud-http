@@ -250,3 +250,13 @@ hcloud.img().superresolution(file).then(res => {
     console.error(err)
 })
 ```
+
+### 小程序数据分析
+#### 获取用户访问小程序数据概况
+```javascript
+hcloud.analysis().getDailySummary('20211109').then(res => {
+    console.log(res.data)
+}).catch(err => {
+    console.error(err)
+})
+```

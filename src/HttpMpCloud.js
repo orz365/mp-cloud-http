@@ -7,6 +7,7 @@ const axios = require('axios')
 const Img = require('./other/Img')
 const Wxacode = require('./other/Wxacode')
 const CustomerServiceMessage = require('./other/CustomerServiceMessage')
+const Analysis = require('./other/Analysis')
 
 /**
  * 微信小程序云开发HTTP请求类
@@ -150,6 +151,16 @@ class HttpMpCloud {
 
     customerServiceMessage() {
         return new CustomerServiceMessage({
+            env: this.env,
+            appid: this.appid,
+            appsecret: this.appsecret,
+            access_token: this.access_token,
+            debug: this.debug,
+        })
+    }
+
+    analysis() {
+        return new Analysis({
             env: this.env,
             appid: this.appid,
             appsecret: this.appsecret,

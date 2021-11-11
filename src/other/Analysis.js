@@ -1,8 +1,7 @@
 const logger = require('../utils/logger')
 const axios = require('axios')
 const {getToken} = require('../utils/token')
-const querystring = require('querystring')
-const FormData = require('form-data')
+const api = require('../utils/api')
 
 class Analysis {
 
@@ -30,7 +29,8 @@ class Analysis {
         }
 
         let promise = new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/datacube/getweanalysisappiddailysummarytrend?access_token=${access_token}`,data).then(res => {
+            let url = api.analysis.getDailySummary()
+            axios.post(url,data).then(res => {
                 logger.debug(res.data)
                 resolve(res)
             }).catch(err => {

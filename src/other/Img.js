@@ -3,8 +3,11 @@ const axios = require('axios')
 const {getToken} = require('../utils/token')
 const querystring = require('querystring')
 const FormData = require('form-data')
+const api = require('../utils/api')
 
 class Img {
+
+    form = new FormData();
 
     constructor({env, appid, appsecret, access_token, debug}) {
         this.env = env
@@ -22,10 +25,13 @@ class Img {
     async aiCrop(img) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
-        let promise = null
+        let promise = null,url
         if (typeof img === 'string') {
             promise = new Promise((resolve, reject) => {
-                axios.post(`https://api.weixin.qq.com/cv/img/aicrop?img_url=${img}&access_token=${access_token}`).then(res => {
+                url = api.img.aiCrop(img,access_token)
+                axios.post(url,{
+                    access_token
+                }).then(res => {
                     logger.debug(res)
                     resolve(res)
                 }).catch(err => {
@@ -34,7 +40,7 @@ class Img {
                 })
             })
         } else {
-            let url = `https://api.weixin.qq.com/cv/img/aicrop?access_token=${access_token}`
+            url = api.img.aiCrop()
             let form = new FormData()
             form.append('access_token', access_token)
             form.append('img', img)
@@ -66,7 +72,10 @@ class Img {
 
         if (typeof img === 'string') {
             promise = new Promise((resolve, reject) => {
-                axios.post(`https://api.weixin.qq.com/cv/img/qrcode?img_url=${img}&access_token=${access_token}`).then(res => {
+                let url = api.img.scanQRCode(img,access_token)
+                axios.post(url,{
+                    access_token
+                }).then(res => {
                     logger.debug(res.data)
                     resolve(res)
                 }).catch(err => {
@@ -75,7 +84,7 @@ class Img {
                 })
             })
         } else {
-            let url = `https://api.weixin.qq.com/cv/img/qrcode?access_token=${access_token}`
+            let url = api.img.scanQRCode('')
             let form = new FormData()
             form.append('access_token', access_token)
             form.append('img', img)
@@ -109,7 +118,8 @@ class Img {
 
         if (typeof img === 'string') {
             promise = new Promise((resolve, reject) => {
-                axios.post(`https://api.weixin.qq.com/cv/img/superresolution?img_url=${img}&access_token=${access_token}`).then(res => {
+                let url = api.img.superresolution(img,access_token)
+                axios.post(url).then(res => {
                     logger.debug('[返回的数据]', res)
                     resolve(res)
                 }).catch(err => {
@@ -118,7 +128,7 @@ class Img {
                 })
             })
         } else {
-            let url = `https://api.weixin.qq.com/cv/img/superresolution?access_token=${access_token}`
+            let url = api.img.superresolution('',access_token)
             let form = new FormData()
             form.append('access_token', access_token)
             form.append('img', img)

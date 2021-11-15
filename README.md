@@ -260,3 +260,12 @@ hcloud.analysis().getDailySummary('20211109').then(res => {
     console.error(err)
 })
 ```
+
+#### 获取用户访问小程序日留存
+```javascript
+hcloud.analysis().getDailyRetain('20211115').then(res => {
+    console.log(res.data)
+}).catch(err => {
+    console.error(err)
+})
+```

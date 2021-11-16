@@ -6,6 +6,7 @@ const api = {
          * [POST] 获取用户访问小程序数据概况
          * @param begin_date
          * @param end_date
+         * @param access_token
          * @return {string}
          */
         getDailySummary: (access_token) => `${prefix}/datacube/getweanalysisappiddailysummarytrend?access_token=${access_token}`,
@@ -13,9 +14,18 @@ const api = {
          * [POST] 获取用户访问小程序日留存
          * @param begin_date
          * @param end_date
+         * @param access_token
          * @return {string}
          */
         getDailyRetain: (access_token) => `${prefix}/datacube/getweanalysisappiddailyretaininfo?access_token=${access_token}`,
+        /**
+         * [POST] 获取用户访问小程序日留存
+         * @param begin_date
+         * @param end_date
+         * @param access_token
+         * @return {string}
+         */
+        getMonthlyRetain: (access_token) => `${prefix}/datacube/getweanalysisappidmonthlyretaininfo?access_token=${access_token}`,
     },
     img: {
         aiCrop: (img, access_token) => `${prefix}/cv/img/aicrop?img_url=${img}&access_token=${access_token}`,

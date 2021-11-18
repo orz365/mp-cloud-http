@@ -26,6 +26,15 @@ const api = {
          * @return {string}
          */
         getMonthlyRetain: (access_token) => `${prefix}/datacube/getweanalysisappidmonthlyretaininfo?access_token=${access_token}`,
+
+        /**
+         * [POST] 获取用户访问小程序周留存
+         * @param begin_date
+         * @param end_date
+         * @param access_token
+         * @return {string}
+         */
+        getWeeklyRetain: (access_token) => `${prefix}/datacube/getweanalysisappidweeklyretaininfo?access_token=${access_token}`,
     },
     img: {
         aiCrop: (img, access_token) => `${prefix}/cv/img/aicrop?img_url=${img}&access_token=${access_token}`,

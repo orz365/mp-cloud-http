@@ -35,6 +35,15 @@ const api = {
          * @return {string}
          */
         getWeeklyRetain: (access_token) => `${prefix}/datacube/getweanalysisappidweeklyretaininfo?access_token=${access_token}`,
+
+        /**
+         * [POST] 获取用户访问小程序数据日趋势
+         * @param begin_date
+         * @param end_date
+         * @param access_token
+         * @return {string}
+         */
+        getDailyVisitTrend: (access_token) => `${prefix}/datacube/getweanalysisappiddailyvisittrend?access_token=${access_token}`,
     },
     img: {
         aiCrop: (img, access_token) => `${prefix}/cv/img/aicrop?img_url=${img}&access_token=${access_token}`,

@@ -31,7 +31,7 @@ class Analysis {
             let url = api.analysis.getDailySummary(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -58,7 +58,7 @@ class Analysis {
             let url = api.analysis.getDailyRetain(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -86,7 +86,7 @@ class Analysis {
             let url = api.analysis.getMonthlyRetain(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -114,7 +114,7 @@ class Analysis {
             let url = api.analysis.getWeeklyRetain(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -143,7 +143,7 @@ class Analysis {
             let url = api.analysis.getDailyVisitTrend(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -171,7 +171,7 @@ class Analysis {
             let url = api.analysis.getMonthlyVisitTrend(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)
@@ -199,7 +199,30 @@ class Analysis {
             let url = api.analysis.getWeeklyVisitTrend(access_token)
             axios.post(url,data).then(res => {
                 logger.debug(res.data)
-                resolve(res)
+                resolve(res.data)
+            }).catch(err => {
+                logger.error(err)
+                reject(err)
+            })
+        })
+        return promise;
+    }
+
+    /**
+     * 获取小程序启动性能，运行性能等数据。
+     * @param time
+     * @param module
+     * @param params
+     * @return {Promise<unknown>}
+     */
+    async getPerformanceData(data) {
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+
+        let promise = new Promise((resolve, reject) => {
+            let url = api.analysis.getPerformanceData(access_token)
+            axios.post(url,data).then(res => {
+                logger.debug(res.data)
+                resolve(res.data)
             }).catch(err => {
                 logger.error(err)
                 reject(err)

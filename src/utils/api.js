@@ -62,6 +62,13 @@ const api = {
          * @return {string}
          */
         getWeeklyVisitTrend: (access_token) => `${prefix}/datacube/getweanalysisappidweeklyvisittrend?access_token=${access_token}`,
+
+        /**
+         * [POST] 获取小程序启动性能，运行性能等数据。
+         * @param access_token
+         * @return {string}
+         */
+        getPerformanceData: (access_token) => `${prefix}/wxa/business/performance/boot?access_token=${access_token}`,
     },
     img: {
         aiCrop: (img, access_token) => `${prefix}/cv/img/aicrop?img_url=${img}&access_token=${access_token}`,

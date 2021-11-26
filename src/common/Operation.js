@@ -1,14 +1,13 @@
-const {getToken, deleteToken, clearToken} = require('./utils/token')
-const logger = require('./utils/logger')
-
+const {getToken, deleteToken, clearToken} = require('../utils/token')
+const logger = require('../utils/logger')
+const Base = require('./Base')
 /**
  * 数据查询与聚合通用方法
  */
-class Common {
+class Operation extends Base{
     initQeury() {
         this.query = `db.collection("${this.tableName}")`
     }
-
 
     limit(num) {
         num = parseInt(num)
@@ -31,4 +30,4 @@ class Common {
     }
 }
 
-module.exports = Common
+module.exports = Operation

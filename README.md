@@ -147,7 +147,7 @@ let file_list = [{
     fileid: 'fileid',
     max_age: 3600
 }]
-hcloud.storage().getFileList(file_list).then(console.log).catch(console.error)
+hcloud.storage().batchDownloadFile(file_list).then(console.log).catch(console.error)
 ```
 #### 获取文件上传链接，并上传文件
 ````javascript

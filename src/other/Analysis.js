@@ -1,17 +1,11 @@
 const logger = require('../utils/logger')
-const axios = require('axios')
 const {getToken} = require('../utils/token')
 const api = require('../utils/api')
+const Base = require('../common/Base')
 
-class Analysis {
+const HttpService = require('../utils/HttpService')
 
-    constructor({env, appid, appsecret, access_token, debug}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
-        logger.level = debug ? 'debug' : 'error'
-    }
+class Analysis extends Base{
 
     /**
      * 获取用户访问小程序数据概况
@@ -29,11 +23,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getDailySummary(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -56,11 +48,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getDailyRetain(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -84,11 +74,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getMonthlyRetain(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -112,11 +100,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getWeeklyRetain(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -141,11 +127,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getDailyVisitTrend(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -169,11 +153,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getMonthlyVisitTrend(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -197,11 +179,9 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getWeeklyVisitTrend(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
@@ -220,18 +200,14 @@ class Analysis {
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getPerformanceData(access_token)
-            axios.post(url,data).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
+            HttpService.post(url,data).then(res => {
+                resolve(res)
             }).catch(err => {
-                logger.error(err)
                 reject(err)
             })
         })
         return promise;
     }
-
-
 }
 
 module.exports = Analysis

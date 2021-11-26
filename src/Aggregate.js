@@ -1,10 +1,10 @@
 const logger = require('./utils/logger')
-const axios = require('axios')
+const HttpService = require('./utils/HttpService')
 const {getToken} = require('./utils/token')
 const querystring = require('querystring')
-const Common = require('./Common')
+const Operation = require('./common/Operation')
 
-class Aggregate extends Common {
+class Aggregate extends Operation {
 
     /**
      * 构建函数
@@ -15,14 +15,9 @@ class Aggregate extends Common {
      * @param tableName 表名
      * @param query 查询sql字符串
      */
-    constructor({env, appid, appsecret, access_token, tableName, query}) {
-        super()
-        this.env = env
-        this.tableName = tableName
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
-
+    constructor(props) {
+        super(props)
+        let query = props.query
         this.query = `${query}.aggregate()`
     }
 
@@ -200,17 +195,17 @@ class Aggregate extends Common {
 
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
+        let url = `https://api.weixin.qq.com/tcb/databaseaggregate?access_token=${access_token}`
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/databaseaggregate?access_token=${access_token}`, param).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            HttpService.post(url, param).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
                 } else {
                     try {
-                        for (var i = 0; i < data.data.length; i++) {
-                            data.data[i] = JSON.parse(data.data[i])
+                        for (var i = 0; i < res.data.length; i++) {
+                            res.data[i] = JSON.parse(res.data[i])
                         }
-                        resolve(data)
+                        resolve(res)
                     } catch (e) {
                         logger.error(e)
                     }

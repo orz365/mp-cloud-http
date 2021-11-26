@@ -1,26 +1,16 @@
 const {getToken, deleteToken, clearToken} = require('./utils/token')
 const logger = require('./utils/logger')
 const axios = require('axios')
+const Base = require('./common/Base')
 
 /**
  * 微信小程序集合信息、导入导出等操作
  */
-class Collections {
+class Collections extends Base{
 
-    /**
-     * 构造函数
-     * @param env  环境id
-     * @param appid   appid
-     * @param appsecret  appsecret
-     * @param access_token  access_token
-     */
-    constructor({env, appid, appsecret, access_token}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
+    constructor(props) {
+        super(props);
     }
-
 
     /**
      * 获取集合信息

@@ -3,12 +3,13 @@ const axios = require('axios')
 const {getToken} = require('./utils/token')
 const querystring = require('querystring')
 const Aggregate = require('./Aggregate')
-const Common = require('./Common')
+const Operation = require('./common/Operation')
+const Base = require('./common/Base')
 axios.defaults.timeout = 30000
 /**
  * 微信小程序集合操作类
  */
-class Collection extends Common {
+class Collection extends Operation {
 
     /**
      * 构造函数
@@ -18,13 +19,9 @@ class Collection extends Common {
      * @param access_token  access_token
      * @param tableName  表名
      */
-    constructor({env, appid, appsecret, access_token, tableName}) {
-        super()
-        this.env = env
-        this.tableName = tableName
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
+    constructor(props) {
+        super(props)
+        this.tableName = props['tableName']
         this.initQeury()
     }
 

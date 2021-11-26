@@ -3,33 +3,18 @@ const Storage = require('./other/Storage')
 const Collections = require('./Collections')
 const logger = require('./utils/logger')
 const {getToken, deleteToken, clearToken} = require('./utils/token')
-const axios = require('axios')
+const HttpService = require('./utils/HttpService')
 const Img = require('./other/Img')
 const Wxacode = require('./other/Wxacode')
 const CustomerServiceMessage = require('./other/CustomerServiceMessage')
 const Analysis = require('./other/Analysis')
+const Security = require('./other/Security')
+const CommonBase = require('./common/Base')
 
 /**
  * 微信小程序云开发HTTP请求类
  */
-class HttpMpCloud {
-
-    /**
-     * 构建函数
-     * @param env
-     * @param appid
-     * @param appsecret
-     * @param access_token
-     * @param debug
-     */
-    constructor({env, appid, appsecret, access_token, debug = false}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
-        this.debug = debug
-        logger.level = debug ? 'debug' : 'error'
-    }
+class HttpMpCloud extends CommonBase {
 
     /**
      * 获取当前
@@ -56,13 +41,8 @@ class HttpMpCloud {
      * @return {Collection}
      */
     collection(tableName) {
-        return new Collection({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            tableName: tableName,
-        })
+        this.params['tableName'] = tableName
+        return new Collection(this.params)
     }
 
     /**
@@ -71,12 +51,7 @@ class HttpMpCloud {
      * @return {Collection}
      */
     collections() {
-        return new Collections({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-        })
+        return new Collections(this.params)
     }
 
     /**
@@ -85,12 +60,7 @@ class HttpMpCloud {
      * @return {Collection}
      */
     storage() {
-        return new Storage({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-        })
+        return new Storage(this.params)
     }
 
     /**
@@ -104,21 +74,19 @@ class HttpMpCloud {
 
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
+        let url = `https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`, data).
-            then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
                 } else {
                     try {
-                        resolve(JSON.parse(data.resp_data))
+                        resolve(JSON.parse(res.resp_data))
                     } catch (e) {
                         logger.error(e)
                     }
                 }
-            }).
-            catch(err => {
+            }).catch(err => {
                 reject(err)
             })
         })
@@ -130,44 +98,25 @@ class HttpMpCloud {
      * @return {Collection}
      */
     img() {
-        return new Img({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            debug: this.debug,
-        })
+        return new Img(this.params)
     }
 
     wxacode() {
-        return new Wxacode({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            debug: this.debug,
-        })
+        return new Wxacode(this.params)
     }
 
     customerServiceMessage() {
-        return new CustomerServiceMessage({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            debug: this.debug,
-        })
+        return new CustomerServiceMessage(this.params)
     }
 
     analysis() {
-        return new Analysis({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            debug: this.debug,
-        })
+        return new Analysis(this.params)
     }
+
+    security() {
+        return new Security(this.params)
+    }
+
 }
 
 module.exports = HttpMpCloud

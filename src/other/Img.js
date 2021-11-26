@@ -1,20 +1,14 @@
 const logger = require('../utils/logger')
-const axios = require('axios')
 const {getToken} = require('../utils/token')
-const querystring = require('querystring')
-const FormData = require('form-data')
 const api = require('../utils/api')
+const HttpService = require('../utils/HttpService')
 
-class Img {
+const Base = require('../common/Base')
 
-    form = new FormData();
+class Img extends Base {
 
-    constructor({env, appid, appsecret, access_token, debug}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
-        logger.level = debug ? 'debug' : 'error'
+    constructor(props) {
+        super(props);
     }
 
     /**
@@ -25,37 +19,26 @@ class Img {
     async aiCrop(img) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
-        let promise = null,url
+        let promise = null, url
         if (typeof img === 'string') {
-            promise = new Promise((resolve, reject) => {
-                url = api.img.aiCrop(img,access_token)
-                axios.post(url,{
-                    access_token
-                }).then(res => {
-                    logger.debug(res)
-                    resolve(res)
-                }).catch(err => {
-                    logger.error(err)
-                    reject(err)
-                })
+            url = api.img.aiCrop(img, access_token)
+            promise = HttpService.post(url, {
+                access_token,
+            }).then(res => {
+                return res
+            }).catch(err => {
+                return err
             })
         } else {
             url = api.img.aiCrop()
-            let form = new FormData()
-            form.append('access_token', access_token)
-            form.append('img', img)
-            promise = new Promise((resolve, reject) => {
-                let data = ''
-                form.submit(url, (err, res) => {
-                    res.on('data', (buffer) => {
-                        data += buffer
-                    })
-                    res.on('end', () => {
-                        logger.debug('[返回的数据]', data)
-                        resolve(JSON.parse(data))
-                    })
-
-                })
+            promise = HttpService.submit(url, {
+                access_token,
+                img,
+            }).then(data => {
+                logger.debug('[返回的数据]', data)
+                return JSON.parse(data)
+            }).catch(err => {
+                return err
             })
         }
         return promise;
@@ -71,35 +54,24 @@ class Img {
         let promise = null
 
         if (typeof img === 'string') {
-            promise = new Promise((resolve, reject) => {
-                let url = api.img.scanQRCode(img,access_token)
-                axios.post(url,{
-                    access_token
-                }).then(res => {
-                    logger.debug(res.data)
-                    resolve(res)
-                }).catch(err => {
-                    logger.error(err)
-                    reject(err)
-                })
+            let url = api.img.scanQRCode(img, access_token)
+            promise = HttpService.post(url, {
+                access_token,
+            }).then(res => {
+                return res
+            }).catch(err => {
+                return err
             })
         } else {
             let url = api.img.scanQRCode('')
-            let form = new FormData()
-            form.append('access_token', access_token)
-            form.append('img', img)
-            promise = new Promise((resolve, reject) => {
-                let data = ''
-                form.submit(url, (err, res) => {
-                    res.on('data', (buffer) => {
-                        data += buffer
-                    })
-                    res.on('end', () => {
-                        logger.debug('[返回的数据]', data)
-                        resolve(JSON.parse(data))
-                    })
-
-                })
+            promise = HttpService.submit(url, {
+                access_token,
+                img,
+            }).then(data => {
+                logger.debug('[返回的数据]', data)
+                return JSON.parse(data)
+            }).catch(err => {
+                return err
             })
         }
 
@@ -117,33 +89,24 @@ class Img {
         let promise = null
 
         if (typeof img === 'string') {
-            promise = new Promise((resolve, reject) => {
-                let url = api.img.superresolution(img,access_token)
-                axios.post(url).then(res => {
-                    logger.debug('[返回的数据]', res)
-                    resolve(res)
-                }).catch(err => {
-                    logger.error(err)
-                    reject(err)
-                })
+            let url = api.img.superresolution(img, access_token)
+            promise = HttpService.post(url, {
+                access_token,
+            }).then(res => {
+                return res
+            }).catch(err => {
+                return err
             })
         } else {
-            let url = api.img.superresolution('',access_token)
-            let form = new FormData()
-            form.append('access_token', access_token)
-            form.append('img', img)
-            promise = new Promise((resolve, reject) => {
-                let data = ''
-                form.submit(url, (err, res) => {
-                    res.on('data', (buffer) => {
-                        data += buffer
-                    })
-                    res.on('end', () => {
-                        logger.debug('[返回的数据]', data)
-                        resolve(JSON.parse(data))
-                    })
-
-                })
+            let url = api.img.superresolution('', access_token)
+            promise =  HttpService.submit(url,{
+                access_token,
+                img
+            }).then(data=>{
+                logger.debug('[返回的数据]', data)
+                return JSON.parse(data)
+            }).catch(err=>{
+                return err
             })
         }
         return promise

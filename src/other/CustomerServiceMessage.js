@@ -1,16 +1,12 @@
 const logger = require('../utils/logger')
-const axios = require('axios')
 const {getToken} = require('../utils/token')
-const FormData = require('form-data')
+const Base = require('../common/Base')
+const HttpService = require('../utils/HttpService')
 
-class CustomerServiceMessage {
+class CustomerServiceMessage extends Base{
 
-    constructor({env, appid, appsecret, access_token, debug}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
-        logger.level = debug ? 'debug' : 'error'
+    constructor(props) {
+        super(props);
     }
 
     /**
@@ -21,18 +17,17 @@ class CustomerServiceMessage {
     async getTempMedia(media_id) {
         let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
 
-        let promise = new Promise((resolve, reject) => {
-            axios.get(`https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${media_id}`, {
-                responseType: 'arraybuffer',
-            }).then(res => {
-                logger.debug(res.data)
-                resolve(res.data)
-            }).catch(err => {
-                logger.error(err)
-                reject(err)
-            })
+        let url  =`https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${media_id}`
+        return HttpService.get(url,{
+            responseType: 'arraybuffer',
+        }).then(res => {
+            logger.debug(res.data)
+            return res.data
+        }).catch(err => {
+            logger.error(err)
+            return err
         })
-        return promise;
+
     }
 }
 

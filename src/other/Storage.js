@@ -1,24 +1,18 @@
 const {getToken} = require('../utils/token')
-const axios = require('axios')
-const FormData = require('form-data')
+const HttpService = require('../utils/HttpService')
+const logger = require('../utils/logger')
+
+const Base = require('../common/Base')
+
+const xml2json = require('xml2json')
 
 /**
  * 微信小程序集合信息、导入导出等操作
  */
-class Storage {
+class Storage extends Base {
 
-    /**
-     * 构造函数
-     * @param env  环境id
-     * @param appid   appid
-     * @param appsecret  appsecret
-     * @param access_token  access_token
-     */
-    constructor({env, appid, appsecret, access_token}) {
-        this.env = env
-        this.appid = appid
-        this.appsecret = appsecret
-        this.access_token = access_token
+    constructor(props) {
+        super(props);
     }
 
     /**
@@ -33,14 +27,13 @@ class Storage {
             path,
         }
 
+        let url = `https://api.weixin.qq.com/tcb/uploadfile?access_token=${access_token}`
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/uploadfile?access_token=${access_token}`, data).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
-                } else {
-                    resolve(res.data)
                 }
+                resolve(res)
             }).catch(err => {
                 reject(err)
             })
@@ -54,24 +47,64 @@ class Storage {
      * @return {Promise}
      */
     async uploadFile(url, param) {
-        let form = new FormData()
-        Object.keys(param).forEach(key => {
-            form.append(key, param[key])
+        return HttpService.submit(url, param).then(res => {
+            let result
+            if (res === '') {
+                result = {
+                    errcode: 0,
+                }
+                return result
+            } else {
+                let jsonStr = null
+                try {
+                    jsonStr = xml2json.toJson(res)
+                } catch (e) {
+
+                }
+                let errmsg = '未知错误'
+                if (jsonStr) {
+                    jsonStr = JSON.parse(jsonStr)
+                    errmsg = jsonStr.Error
+                }
+                result = {
+                    errcode: -1,
+                    errmsg,
+                }
+                return Promise.reject(result)
+            }
         })
+    }
+
+    /**
+     * 根据file_id获取文件下载链接
+     * @param file_list  [{fileid:'xxxx',max_age:3600}]
+     * @return {Promise}
+     */
+    async batchDownloadFile(file_list) {
+        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+
+        let data = {
+            env: this.env,
+            file_list,
+        }
+
+        let url = `https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=${access_token}`
 
         return new Promise((resolve, reject) => {
-            form.submit(url, (err, res) => {
-                if (err) {
-                    reject(err);
-                    return;
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
+                    reject(res)
                 }
                 resolve(res)
+            }).catch(err => {
+                reject(err)
             })
         })
     }
 
     /**
      * 根据file_id获取文件下载链接
+     * @deprecated
      * @param file_list  [{fileid:'xxxx',max_age:3600}]
      * @return {Promise}
      */
@@ -82,15 +115,14 @@ class Storage {
             env: this.env,
             file_list,
         }
+        let url = `https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=${access_token}`
 
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=${access_token}`, data).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
-                } else {
-                    resolve(res.data)
                 }
+                resolve(res)
             }).catch(err => {
                 reject(err)
             })
@@ -106,17 +138,17 @@ class Storage {
 
         let data = {
             env: this.env,
-            fileid_list
+            fileid_list,
         }
 
+        let url = `https://api.weixin.qq.com/tcb/batchdeletefile?access_token=${access_token}`
+
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/batchdeletefile?access_token=${access_token}`, data).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
-                } else {
-                    resolve(res.data)
                 }
+                resolve(res)
             }).catch(err => {
                 reject(err)
             })

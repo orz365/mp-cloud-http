@@ -1,6 +1,18 @@
 const prefix = 'https://api.weixin.qq.com'
 
 const api = {
+
+    security:{
+        /**
+         * [POST] 获取用户访问小程序数据概况
+         * @param begin_date
+         * @param end_date
+         * @param access_token
+         * @return {string}
+         */
+        imgSecCheck: (access_token) => `${prefix}/wxa/img_sec_check?access_token=${access_token}`,
+    },
+
     analysis: {
         /**
          * [POST] 获取用户访问小程序数据概况

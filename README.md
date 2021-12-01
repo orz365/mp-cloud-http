@@ -36,6 +36,19 @@ let hcloud = new HttpMpCloud({
     access_token  // 可选
 })
 
+// 获取最新的{access_token,expires_in}，每次都获取最新的token，慎用
+hcloud.getNewToken().then(console.log)
+// 返回数据
+{
+  access_token: 'access_token',
+  expires_in: 7200
+}
+
+// 如果不想使用实例中的缓存来管理access_token
+// 可以自己管理的access_token信息，自己管理过期时间等
+// 在实例中就会使用当前设置的token
+hcloud.setAccessToken('access_token')
+
 // 获取集合数据库表tb_test
 let collection = hcloud.collection('tb_test')
 

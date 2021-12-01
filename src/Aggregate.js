@@ -1,7 +1,6 @@
 const logger = require('./utils/logger')
 const HttpService = require('./utils/HttpService')
 const {getToken} = require('./utils/token')
-const querystring = require('querystring')
 const Operation = require('./common/Operation')
 
 class Aggregate extends Operation {

@@ -1,7 +1,7 @@
-const {getToken, deleteToken, clearToken} = require('./utils/token')
+const {getToken} = require('./utils/token')
 const logger = require('./utils/logger')
-const axios = require('axios')
 const Base = require('./common/Base')
+const HttpService = require('./utils/HttpService')
 
 /**
  * 微信小程序集合信息、导入导出等操作
@@ -22,12 +22,12 @@ class Collections extends Base{
         data.env = this.env
 
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/databasecollectionget?access_token=${access_token}`, data).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            let url = `https://api.weixin.qq.com/tcb/databasecollectionget?access_token=${access_token}`
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
                 } else {
-                    resolve(res.data)
+                    resolve(res)
                 }
             }).catch(err => {
                 reject(err)
@@ -49,12 +49,12 @@ class Collections extends Base{
         }
 
         return new Promise((resolve, reject) => {
-            axios.post(`https://api.weixin.qq.com/tcb/databasemigratequeryinfo?access_token=${access_token}`, data).then(res => {
-                let data = res.data
-                if (data.errcode !== 0) {
+            let url = `https://api.weixin.qq.com/tcb/databasemigratequeryinfo?access_token=${access_token}`
+            HttpService.post(url, data).then(res => {
+                if (res.errcode !== 0) {
                     reject(res)
                 } else {
-                    resolve(res.data)
+                    resolve(res)
                 }
             }).catch(err => {
                 reject(err)

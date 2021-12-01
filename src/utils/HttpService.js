@@ -2,6 +2,8 @@ const logger = require('../utils/logger')
 const axios = require('axios')
 const FormData = require('form-data')
 
+axios.defaults.timeout = 30000
+
 const submit = (url, fields = {}) => {
     let form = new FormData()
     for (let key in fields) {
@@ -40,6 +42,7 @@ const post = (url,data,config={})=>{
             logger.debug('[返回的数据]', res.data)
             resolve(res.data)
         }).catch(err => {
+            logger.error(err)
             reject(err)
         })
     })

@@ -2,25 +2,44 @@ const Collection = require('./Collection')
 const Storage = require('./other/Storage')
 const Collections = require('./Collections')
 const logger = require('./utils/logger')
-const {getToken, deleteToken, clearToken} = require('./utils/token')
+const {getToken, getNewToken} = require('./utils/token')
 const HttpService = require('./utils/HttpService')
 const Img = require('./other/Img')
 const Wxacode = require('./other/Wxacode')
 const CustomerServiceMessage = require('./other/CustomerServiceMessage')
 const Analysis = require('./other/Analysis')
 const Security = require('./other/Security')
-const CommonBase = require('./common/Base')
+const Base = require('./common/Base')
 
 /**
  * 微信小程序云开发HTTP请求类
  */
-class HttpMpCloud extends CommonBase {
+class HttpMpCloud extends Base {
 
     /**
      * 获取当前
+     * @deprecated
      */
     currentToken() {
         return getToken(this.env, this.appid, this.appsecret)
+    }
+
+    /**
+     * 获取最新的token，并返回{access_token,expires_in}
+     * 如果不想使用当前的缓存来管理access_token，可以拿到最新的token后自行管理
+     * @return {Promise<{access_token,expires_in}>}
+     */
+    async getNewToken() {
+        let {access_token,expires_in} = await getNewToken(this.params)
+        return {access_token,expires_in}
+    }
+
+    /**
+     * 自己管理access_token，重新设置access_token
+     * @param access_token
+     */
+    setAccessToken(access_token){
+        this.params.access_token = access_token
     }
 
     /**

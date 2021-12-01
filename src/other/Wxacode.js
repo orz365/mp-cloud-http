@@ -1,7 +1,5 @@
 const {getToken} = require('../utils/token')
-
 const Base = require('../common/Base')
-
 const HttpService = require('../utils/HttpService')
 
 class Wxacode extends Base {

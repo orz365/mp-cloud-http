@@ -14,7 +14,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getDailySummary(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -39,7 +39,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getDailyRetain(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -64,7 +64,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getMonthlyRetain(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -90,7 +90,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getWeeklyRetain(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -117,7 +117,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getDailyVisitTrend(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -143,7 +143,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getMonthlyVisitTrend(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -169,7 +169,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getWeeklyVisitTrend(begin_date, end_date = begin_date) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             begin_date,
@@ -196,7 +196,7 @@ class Analysis extends Base{
      * @return {Promise<unknown>}
      */
     async getPerformanceData(data) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let promise = new Promise((resolve, reject) => {
             let url = api.analysis.getPerformanceData(access_token)

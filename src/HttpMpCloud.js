@@ -21,7 +21,7 @@ class HttpMpCloud extends Base {
      * @deprecated
      */
     currentToken() {
-        return getToken(this.env, this.appid, this.appsecret)
+        return getToken(this.params)
     }
 
     /**
@@ -91,7 +91,7 @@ class HttpMpCloud extends Base {
      */
     async callFunction({name, data}) {
 
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let url = `https://api.weixin.qq.com/tcb/invokecloudfunction?access_token=${access_token}&name=${name}&env=${this.env}`
         return new Promise((resolve, reject) => {

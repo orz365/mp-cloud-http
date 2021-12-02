@@ -15,7 +15,7 @@ class CustomerServiceMessage extends Base{
      * @return {Promise<unknown>}
      */
     async getTempMedia(media_id) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let url  =`https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${media_id}`
         return HttpService.get(url,{

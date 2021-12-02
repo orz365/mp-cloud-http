@@ -1,36 +1,47 @@
 /* 缓存工具 */
 const JsonStorage = require('node-localstorage').JSONStorage
-const storage = new JsonStorage(`${process.cwd()}/mch-storage`)
+const path = require('path')
 
 /**
  * 本地文件缓存
  */
 class StorageUtil {
-    constructor() {
+
+    instance = null
+    storage = null
+
+    constructor(storage_path) {
+        this.storage = new JsonStorage(path.join(storage_path, 'mch-storage'))
     }
 
-    static getItem(key) {
-        return storage.getItem(key)
+    static newInstance(storage_path) {
+        if (!this.instance) {
+            this.instance = new StorageUtil(storage_path)
+        }
+        return this.instance;
     }
 
-    static setItem(key, value) {
-        storage.setItem(key, value)
+    getItem(key) {
+        return this.storage.getItem(key)
     }
 
+    setItem(key, value) {
+        this.storage.setItem(key, value)
+    }
 
     /**
      * 清空所有token
      */
-    static clearToken () {
-        storage.clear()
+    clearToken() {
+        this.storage.clear()
     }
 
     /**
      * 删除
      * @param key
      */
-    static deleteToken (key) {
-        storage.removeItem(key)
+    deleteToken(key) {
+        this.storage.removeItem(key)
     }
 
 }

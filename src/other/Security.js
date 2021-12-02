@@ -14,7 +14,7 @@ class Security extends Base{
      * @return {Promise<void>}
      */
     async imgSecCheck(media){
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let url = `https://api.weixin.qq.com/wxa/img_sec_check?access_token=${access_token}`
 

@@ -20,7 +20,7 @@ class Storage extends Base {
      * @return {Promise}
      */
     async getUploadPath(path) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             env: this.env,
@@ -81,7 +81,7 @@ class Storage extends Base {
      * @return {Promise}
      */
     async batchDownloadFile(file_list) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             env: this.env,
@@ -109,7 +109,7 @@ class Storage extends Base {
      * @return {Promise}
      */
     async getFileList(file_list) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             env: this.env,
@@ -134,7 +134,7 @@ class Storage extends Base {
      * @param fileid_list
      */
     async batchDeleteFile(fileid_list) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             env: this.env,

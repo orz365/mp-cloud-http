@@ -17,7 +17,7 @@ class Img extends Base {
      * @return {Promise<unknown>}
      */
     async aiCrop(img) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let promise = null, url
         if (typeof img === 'string') {
@@ -50,7 +50,7 @@ class Img extends Base {
      * @return {Promise<unknown>}
      */
     async scanQRCode(img) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
         let promise = null
 
         if (typeof img === 'string') {
@@ -85,7 +85,7 @@ class Img extends Base {
      */
     async superresolution(img) {
 
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
         let promise = null
 
         if (typeof img === 'string') {

@@ -72,10 +72,11 @@ class Collection extends Operation {
         }
         this.initQeury()
 
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         return new Promise((resolve, reject) => {
-            HttpService.post(`https://api.weixin.qq.com/tcb/databasequery?access_token=${access_token}`, param).then(res => {
+            let url = `https://api.weixin.qq.com/tcb/databasequery?access_token=${access_token}`
+            HttpService.post(url, param).then(res => {
                 if (res.errcode !== 0) {
                     reject(res)
                 } else {
@@ -106,7 +107,7 @@ class Collection extends Operation {
             "query": this.query,
         }
         this.initQeury()
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         return new Promise((resolve, reject) => {
             HttpService.post(`https://api.weixin.qq.com/tcb/databasecount?access_token=${access_token}`, param).then(res => {
@@ -140,7 +141,7 @@ class Collection extends Operation {
             "query": this.query,
         }
         this.initQeury()
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         return new Promise((resolve, reject) => {
             HttpService.post(`https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`, param).then(res => {
@@ -169,7 +170,7 @@ class Collection extends Operation {
             "query": this.query,
         }
         this.initQeury()
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         return new Promise((resolve, reject) => {
             HttpService.post(`https://api.weixin.qq.com/tcb/databasedelete?access_token=${access_token}`, param, {}).then(res => {
@@ -203,7 +204,7 @@ class Collection extends Operation {
             "query": this.query,
         }
         this.initQeury()
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         return new Promise((resolve, reject) => {
             HttpService.post(`https://api.weixin.qq.com/tcb/databaseupdate?access_token=${access_token}`, param).then(res => {

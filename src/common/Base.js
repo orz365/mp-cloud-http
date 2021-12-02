@@ -10,7 +10,7 @@ class Base {
      * @param access_token
      * @param debug
      */
-    constructor({env, appid, appsecret, access_token, debug = false}) {
+    constructor({env, appid, appsecret, access_token, storage_path, debug = false}) {
         this.env = env
         this.appid = appid
         this.appsecret = appsecret
@@ -22,7 +22,8 @@ class Base {
             appid,
             appsecret,
             access_token,
-            debug
+            debug,
+            storage_path: storage_path || process.cwd()
         }
     }
 }

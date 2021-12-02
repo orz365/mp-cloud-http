@@ -17,7 +17,7 @@ class Collections extends Base{
      * @return {Promise}
      */
     async get(data = {}) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         data.env = this.env
 
@@ -41,7 +41,7 @@ class Collections extends Base{
      * @return {Promise}
      */
     async migrateInfo(job_id) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let data = {
             env: this.env,

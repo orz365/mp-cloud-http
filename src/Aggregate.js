@@ -192,7 +192,7 @@ class Aggregate extends Operation {
         }
         this.initQeury()
 
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let url = `https://api.weixin.qq.com/tcb/databaseaggregate?access_token=${access_token}`
         return new Promise((resolve, reject) => {

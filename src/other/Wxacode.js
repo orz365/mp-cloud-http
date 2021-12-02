@@ -15,7 +15,7 @@ class Wxacode extends Base {
      * @return {Promise<unknown>}
      */
     async createQRCode({path, width = 430}) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let param = {
             path: path,
@@ -48,7 +48,7 @@ class Wxacode extends Base {
                   line_color = {'r': 0, 'g': 0, 'b': 0},
                   is_hyaline = false,
               }) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let param = {
             path,
@@ -90,7 +90,7 @@ class Wxacode extends Base {
             line_color = {'r': 0, 'g': 0, 'b': 0},
             is_hyaline = false,
         }) {
-        let access_token = await getToken(this.env, this.appid, this.appsecret, this.access_token)
+        let access_token = await getToken(this.params)
 
         let param = {
             scene,

@@ -1,6 +1,6 @@
 const logger = require('./logger')
 const HttpService = require('../utils/HttpService')
-const storageUtil = require('./StorageUtil')
+const StorageUtil = require('./StorageUtil')
 
 /**
  * 获取最新的token
@@ -28,13 +28,16 @@ const getNewToken = async function ({env, appid, appsecret}) {
  * @param access_token_input 传入的access_token，如果存在，则
  * @return {Promise.<*>}
  */
-const getToken = async function (env, appid, appsecret, access_token_input) {
-    if (access_token_input) {
+const getToken = async function ({env, appid, appsecret, access_token, storage_path}) {
+    if (access_token) {
         logger.debug('[返回传入的access_token]')
-        return access_token_input
+        return access_token
     }
 
     let storage_key = env
+
+    debugger
+    let storageUtil = StorageUtil.newInstance(storage_path)
 
     let token = storageUtil.getItem(storage_key)
 
@@ -59,16 +62,15 @@ const getToken = async function (env, appid, appsecret, access_token_input) {
 
     logger.debug('[重新获取access_token]')
 
-    let {access_token, expires_in} = res
-    let expire_time = Date.now() + expires_in * 1000
+    let expire_time = Date.now() + res.expires_in * 1000
 
     storageUtil.setItem(storage_key, {
-        access_token,
-        expires_in,
+        access_token: res.access_token,
+        expires_in: res.expires_in,
         expire_time,
     })
 
-    return access_token
+    return res.access_token
 }
 module.exports = {
     getToken,

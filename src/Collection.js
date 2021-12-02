@@ -145,7 +145,7 @@ class Collection extends Operation {
 
         return new Promise((resolve, reject) => {
             HttpService.post(`https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`, param).then(res => {
-                if (reserrcode !== 0) {
+                if (res.errcode !== 0) {
                     reject(res)
                 } else {
                     resolve(res)

@@ -256,7 +256,7 @@ hcloud.img().scanQRCode(file).then(res => {
 ```javascript
 var file = fs.createReadStream('图片.png')
 hcloud.img().superresolution(file).then(res => {
-    // 根据返回的media_id，获取图片信息
+    // 根据返回的media_id，下载图片，这里使用客服消息接口进行获取
     hcloud.customerServiceMessage().getTempMedia(res.media_id).then(data => {
         let result = fs.writeFileSync('./lll.jpg', Buffer.from(data, 'binary'))
     })
@@ -266,6 +266,7 @@ hcloud.img().superresolution(file).then(res => {
 ```
 
 ### 小程序数据分析
+参考小程序文档：https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/data-analysis/visit-retain/analysis.getDailyRetain.html
 #### 获取用户访问小程序数据概况
 ```javascript
 hcloud.analysis().getDailySummary('20211109').then(res => {

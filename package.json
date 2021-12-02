@@ -4,7 +4,7 @@
   "description": "小程序云服务数据库HTTP工具，支持多小程序access_token获取，支持聚合函数的使用",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine spec/test/collection-spec.js"
+    "test": "jasmine"
   },
   "repository": {
     "type": "git",

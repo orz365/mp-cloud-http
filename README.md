@@ -283,3 +283,29 @@ hcloud.analysis().getDailyRetain('20211115').then(res => {
     console.error(err)
 })
 ```
+
+### 内容安全
+#### 校验一张图片是否含有违法违规内容
+````javascript
+// 本地图片
+var file = fs.createReadStream('xxx.jpg')
+hcloud.security().imgSecCheck(file).then(res=>{
+    console.log(res)
+}).catch(err=>{
+    console.error(err)
+})
+
+// 网络图片
+const axios = require('axios')
+axios.get('https://xxx.xxx.xxx.jpg',{
+    responseType: 'stream'
+}).then(res => {
+    hcloud.security().imgSecCheck(res.data).then(res=>{
+        console.log(res)
+    }).catch(err=>{
+        console.error(err)
+    })
+}).catch(err => {
+    console.error(err)
+})
+````

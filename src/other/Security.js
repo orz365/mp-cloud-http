@@ -16,11 +16,19 @@ class Security extends Base{
     async imgSecCheck(media){
         let access_token = await getToken(this.params)
 
-        let url = `https://api.weixin.qq.com/wxa/img_sec_check?access_token=${access_token}`
+        let url = `https://api.weixin.qq.com/wxa/img_sec_check`
 
-        HttpService.post(url,{
+        let promise =  HttpService.submit(url,{
+            access_token,
             media
+        }).then(data=>{
+            logger.debug('[返回的数据]', data)
+            return JSON.parse(data)
+        }).catch(err=>{
+            return err
         })
+
+        return promise
     }
 }
 

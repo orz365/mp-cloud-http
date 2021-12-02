@@ -84,7 +84,7 @@ class Storage extends Base {
         let access_token = await getToken(this.params)
 
         let data = {
-            env: this.env,
+            env: this.params.env,
             file_list,
         }
 

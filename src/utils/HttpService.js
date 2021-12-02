@@ -36,6 +36,7 @@ const get = (url, config) => {
         return err
     })
 }
+
 const post = (url,data,config={})=>{
     return new Promise((resolve,reject)=>{
         axios.post(url,data,config).then(res => {

@@ -18,14 +18,14 @@ class CustomerServiceMessage extends Base{
         let access_token = await getToken(this.params)
 
         let url  =`https://api.weixin.qq.com/cgi-bin/media/get?access_token=${access_token}&media_id=${media_id}`
-        return HttpService.get(url,{
-            responseType: 'arraybuffer',
-        }).then(res => {
-            logger.debug(res.data)
-            return res.data
-        }).catch(err => {
-            logger.error(err)
-            return err
+        return new Promise((resolve, reject) => {
+            HttpService.get(url,{
+                responseType: 'arraybuffer',
+            }).then(res => {
+                resolve(res)
+            }).catch(err => {
+                reject(err)
+            })
         })
 
     }

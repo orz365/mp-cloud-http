@@ -1,5 +1,6 @@
 .idea
 node_modules
-test
 package-lock.json
 storage
+spec/test/mch-storage
+spec/test/*.jpg

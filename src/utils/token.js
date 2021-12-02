@@ -36,7 +36,6 @@ const getToken = async function ({env, appid, appsecret, access_token, storage_p
 
     let storage_key = env
 
-    debugger
     let storageUtil = StorageUtil.newInstance(storage_path)
 
     let token = storageUtil.getItem(storage_key)
@@ -45,7 +44,7 @@ const getToken = async function ({env, appid, appsecret, access_token, storage_p
         let expire_time = token.expire_time
         // 设置10分钟的提前量
         if (expire_time > Date.now() + 60 * 10 * 1000) {
-            logger.debug('[使用缓存token]', token.access_token)
+            logger.debug('[使用缓存token]', token.access_token, token.expire_time)
             return token.access_token
         }
     } else {

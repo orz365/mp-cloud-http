@@ -33,7 +33,8 @@ let hcloud = new HttpMpCloud({
     env: env,
     appid,
     appsecret,
-    access_token  // 可选
+    storage_path: __dirname, // access_token存储路径，固定存储位置
+    access_token  // 可选，不填则使用默认管理
 })
 
 // 获取最新的{access_token,expires_in}，每次都获取最新的token，慎用

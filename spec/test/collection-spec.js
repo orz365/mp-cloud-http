@@ -2,15 +2,32 @@ const {hcloud, db} = require('./head')
 
 describe("云开发操作数据库", function () {
 
-    it("查询", function (done) {
-        hcloud.collection('tb_post').where({
-            update_time: db.command.gt(new Date()),
-        }).get().then(res => {
-            done()
-        }).catch(err => {
-            done.fail(err)
+    it("增删改查", function (done) {
+        hcloud.collection('tb_test').add({
+            data:{
+                name:'mp-cloud-http'
+            }
+        }).then(res=>{
+            let id = res.id_list[0]
+            hcloud.collection('tb_test').where({
+                _id: id
+            }).update({
+                data:{
+                    name:'mp-cloud-http2'
+                }
+            }).then(res=>{
+                hcloud.collection('tb_test').where({
+                    _id: id
+                }).remove().then(()=>{
+                    hcloud.collection('tb_test').get().then(res=>{
+                        console.log(res)
+                    })
+                })
+            })
         })
     });
+
+
 
     it("聚合函数", function (done) {
         let _ = db.command

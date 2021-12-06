@@ -1,5 +1,5 @@
 const {hcloud} = require('./head')
-
+const DateUtil = require('../../src/utils/DateUtil')
 const fs = require('fs')
 const path = require('path')
 
@@ -106,9 +106,11 @@ describe("数据分析", function () {
     });
 
     it("[analysis.getUserPortrait]获取小程序新增或活跃用户的画像分布数据", function (done) {
+        // 支持昨天，最近7天，所以这里要取昨天的数据
+        let yesterday = DateUtil.getYesterday()
         let data = {
-            begin_date: '20211201',
-            end_date: '20211201',
+            begin_date: yesterday,
+            end_date: yesterday,
         }
         hcloud.analysis().getUserPortrait(data).then(res => {
             done()

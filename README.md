@@ -42,7 +42,7 @@ hcloud.getNewToken().then(console.log)
 hcloud.setAccessToken('access_token')
 
 // 用于条件参数的生成，如db.command
-let db = cloud.database()
+let db = hcloud.database()
 
 // 获取集合数据库表tb_test
 let collection = db.collection('tb_test')

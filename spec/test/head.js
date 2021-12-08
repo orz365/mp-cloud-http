@@ -1,6 +1,6 @@
 const HttpMpCloud = require('../../index')
 
-const env = 'tenwhy-ktkq8',
+let env = 'xxx',
     appid = 'xxx',
     appsecret = 'xxx'
 
@@ -8,18 +8,13 @@ const hcloud = new HttpMpCloud({
     env: env,
     appid,
     appsecret,
-    debug: false,
+    debug: true,
     storage_path: __dirname,
 })
 
-const cloud = require('wx-server-sdk')
-
-cloud.init({
-    env,
-})
-const db = cloud.database()
+const db = hcloud.database()
 
 module.exports = {
     hcloud,
-    db,
+    db
 }

@@ -3,6 +3,7 @@ const HttpService = require('./utils/HttpService')
 const {getToken} = require('./utils/token')
 const Aggregate = require('./Aggregate')
 const Operation = require('./common/Operation')
+const query_1 = require('@cloudbase/database/dist/commonjs/serializer/query')
 
 /**
  * 微信小程序集合操作类
@@ -34,10 +35,18 @@ class Collection extends Operation {
         })
     }
 
-    where(where) {
-        if (typeof (where) === 'object') {
-            where = JSON.stringify(where)
-            this.query += `.where(${where})`
+    where(query) {
+        if (typeof (query) === 'object') {
+            console.log(query)
+
+            const keys = Object.keys(query);
+            const checkFlag = keys.some(item => {
+                return query[item] !== undefined;
+            });
+
+            query =  query_1.QuerySerializer.encodeEJSON(query)
+            console.log(query)
+            this.query += `.where(${query})`
         }
         logger.debug(this.query)
         return this

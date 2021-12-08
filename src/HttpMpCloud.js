@@ -10,6 +10,7 @@ const CustomerServiceMessage = require('./other/CustomerServiceMessage')
 const Analysis = require('./other/Analysis')
 const Security = require('./other/Security')
 const Base = require('./common/Base')
+const Database = require('./Database')
 
 /**
  * 微信小程序云开发HTTP请求类
@@ -51,11 +52,11 @@ class HttpMpCloud extends Base {
         if (env) {
             this.env = env
         }
-        return this
+        return new Database(this.params)
     }
 
     /**
-     * 操作集合
+     * 操作集合 使用 hcloud.database().collection
      * @param tableName
      * @return {Collection}
      */

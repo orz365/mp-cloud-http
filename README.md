@@ -12,21 +12,12 @@ npm install mp-cloud-http
 ### 例子
 ```javascript
 const HttpMpCloud = require('mp-cloud-http')
-const cloud = require('wx-server-sdk')   // 微信开发的sdk，用于条件参数的生成
 
 // 参数
 let env = '环境id',
     appid = 'appid',
     appsecret = 'appsecret',
     access_token = 'access_token'  // 优先使用access_token
-    
-// 初始化云开发自己的环境
-cloud.init({
-    env: env
-})
-
-// 获取云开发本身的数据库，仅用于条件参数的生成，如db.command
-let db = cloud.database()
 
 // 生成Http云开发对象
 let hcloud = new HttpMpCloud({
@@ -50,8 +41,11 @@ hcloud.getNewToken().then(console.log)
 // 在实例中就会使用当前设置的token
 hcloud.setAccessToken('access_token')
 
+// 用于条件参数的生成，如db.command
+let db = cloud.database()
+
 // 获取集合数据库表tb_test
-let collection = hcloud.collection('tb_test')
+let collection = db.collection('tb_test')
 
 // 查询记录
 collection.where({
@@ -104,7 +98,6 @@ collection.where({
 #### 聚合函数的使用
 ```javascript
 const HttpMpCloud = require('mp-cloud-http')
-const cloud = require('wx-server-sdk')   // 微信开发的sdk，用于条件参数的生成
 
 // 参数
 let env = '环境id',
@@ -112,19 +105,16 @@ let env = '环境id',
     appsecret = 'appsecret',
     access_token = 'access_token'  // 优先使用access_token
 
-cloud.init({
-    env
-})
-let db = cloud.database()
-let _ = db.command
-let $ = db.command.aggregate
-
 let hcloud = new HttpMpCloud({
     env,
     appid,
     appsecret,
     debug: true
 })
+
+let db = hcloud.database()
+let _ = db.command
+let $ = db.command.aggregate
 
 // 联表查询 
 hcloud.collection('tb_comment').aggregate().lookup({

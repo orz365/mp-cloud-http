@@ -46,7 +46,7 @@ class HttpMpCloud extends Base {
     /**
      * 数据库选择
      * @param env
-     * @return {HttpMpCloud}
+     * @return {Database}
      */
     database(env) {
         if (env) {

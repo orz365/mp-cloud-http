@@ -1,6 +1,6 @@
 # 微信小程序云服务HTTP工具
 
-微信小程序云开发提供了 HTTP API 访问小程序云开发资源，使用了小程序的appid和appsecret生成access_token，mp-cloud-http对http请求的api进行简单的封装，方便调用。
+微信小程序云开发提供了 HTTP API 访问小程序云开发资源，使用了小程序的appid和appsecret管理access_token，mp-cloud-http对http请求的api进行封装，使用方法与小程序中的语法一致，方便调用。
 
 ### 安装
 

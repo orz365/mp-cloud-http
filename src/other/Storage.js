@@ -4,7 +4,7 @@ const logger = require('../utils/logger')
 
 const Base = require('../common/Base')
 
-const xml2json = require('xml2json')
+const xml2js = require('xml2js')
 
 /**
  * 微信小程序集合信息、导入导出等操作
@@ -47,7 +47,7 @@ class Storage extends Base {
      * @return {Promise}
      */
     async uploadFile(url, param) {
-        return HttpService.submit(url, param).then(res => {
+        return HttpService.submit(url, param).then(async res => {
             let result
             if (res === '') {
                 result = {
@@ -55,15 +55,10 @@ class Storage extends Base {
                 }
                 return result
             } else {
-                let jsonStr = null
-                try {
-                    jsonStr = xml2json.toJson(res)
-                } catch (e) {
+                let jsonStr = await xml2js.parseStringPromise(res)
 
-                }
                 let errmsg = '未知错误'
                 if (jsonStr) {
-                    jsonStr = JSON.parse(jsonStr)
                     errmsg = jsonStr.Error
                 }
                 result = {

@@ -8,6 +8,7 @@ class Base {
      * @param appid
      * @param appsecret
      * @param access_token
+     * @param storage_path 存储路径
      * @param debug
      */
     constructor({env, appid, appsecret, access_token, storage_path, debug = false}) {

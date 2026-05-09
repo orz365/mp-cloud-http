@@ -5,6 +5,7 @@ const Base = require('./Base')
  * 数据查询与聚合通用方法
  */
 class Operation extends Base{
+
     initQeury() {
         this.query = `db.collection("${this.tableName}")`
     }

@@ -1,15 +1,12 @@
 const logger = require('./utils/logger')
 const HttpService = require('./utils/HttpService')
 const {getToken} = require('./utils/token')
-const Aggregate = require('./Aggregate')
 const Operation = require('./common/Operation')
-const Document = require('./Document')
-const query_1 = require('@cloudbase/database/dist/commonjs/serializer/query')
 
 /**
  * 微信小程序集合操作类
  */
-class Collection extends Operation {
+class Document  extends Operation {
 
     /**
      * 构造函数
@@ -21,63 +18,11 @@ class Collection extends Operation {
      */
     constructor(props) {
         super(props)
+        console.log('baseConfig',super.baseConfig.env)
         this.tableName = props['tableName']
-        this.initQeury()
+        this.query = props['query']
     }
 
-    aggregate() {
-        return new Aggregate({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            tableName: this.tableName,
-            query: this.query,
-        })
-    }
-
-    doc(id){
-        this.query += `.doc("${id}")`
-        return new Document({
-            env: this.env,
-            appid: this.appid,
-            appsecret: this.appsecret,
-            access_token: this.access_token,
-            tableName: this.tableName,
-            query: this.query,
-        })
-    }
-
-    where(query) {
-        if (typeof (query) === 'object') {
-            console.log(query)
-
-            const keys = Object.keys(query);
-            const checkFlag = keys.some(item => {
-                return query[item] !== undefined;
-            });
-
-            query =  query_1.QuerySerializer.encodeEJSON(query)
-            console.log(query)
-            this.query += `.where(${query})`
-        }
-        logger.debug(this.query)
-        return this
-    }
-
-    orderBy(field, orderType) {
-        this.query += `.orderBy("${field}","${orderType}")`
-        return this
-    }
-
-    field(option) {
-        if (typeof (option) === 'object') {
-            option = JSON.stringify(option)
-            this.query += `.field(${option})`
-        }
-        logger.debug(this.query)
-        return this
-    }
 
     /**
      * 查询记录
@@ -117,66 +62,6 @@ class Collection extends Operation {
         })
     }
 
-    /**
-     * 统计记录数量
-     * @return {Promise}
-     */
-    async count() {
-        this.query += `.count()`
-        logger.debug(this.query)
-        let param = {
-            "env": this.env,
-            "query": this.query,
-        }
-        this.initQeury()
-        let access_token = await getToken(this.params)
-
-        return new Promise((resolve, reject) => {
-            HttpService.post(`https://api.weixin.qq.com/tcb/databasecount?access_token=${access_token}`, param).then(res => {
-                if (res.errcode !== 0) {
-                    reject(res)
-                } else {
-                    resolve(res)
-                }
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    }
-
-    /**
-     * 新增记录
-     * @param option
-     * @return {Promise}
-     */
-    async add(option = {}) {
-        if (typeof (option.data) === 'undefined')
-            throw new Error('新增数据格式错误')
-
-        option = JSON.stringify(option)
-        this.query += `.add(${option})`
-
-        logger.debug(this.query)
-
-        let param = {
-            "env": this.env,
-            "query": this.query,
-        }
-        this.initQeury()
-        let access_token = await getToken(this.params)
-
-        return new Promise((resolve, reject) => {
-            HttpService.post(`https://api.weixin.qq.com/tcb/databaseadd?access_token=${access_token}`, param).then(res => {
-                if (res.errcode !== 0) {
-                    reject(res)
-                } else {
-                    resolve(res)
-                }
-            }).catch(err => {
-                reject(err)
-            })
-        })
-    }
 
     /**
      * 删除记录
@@ -242,6 +127,36 @@ class Collection extends Operation {
         })
     }
 
+    async set(option) {
+        if (typeof (option.data) === 'undefined')
+            throw new Error('更新数据格式错误')
+
+        option = JSON.stringify(option)
+        this.query += `.set(${option})`
+
+        logger.debug(this.query)
+
+        let param = {
+            "env": this.env,
+            "query": this.query,
+        }
+        this.initQeury()
+        let access_token = await getToken(this.params)
+
+        return new Promise((resolve, reject) => {
+            HttpService.post(`https://api.weixin.qq.com/tcb/databaseupdate?access_token=${access_token}`, param).then(res => {
+                if (res.errcode !== 0) {
+                    reject(res)
+                } else {
+                    resolve(res)
+                }
+            }).catch(err => {
+                logger.error(err)
+                reject(err)
+            })
+        })
+    }
+
 }
 
-module.exports = Collection
+module.exports = Document
